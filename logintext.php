@@ -4,14 +4,15 @@
     
     if(!empty($username) && !empty($password))
     {
-        $con = mysql_connect("localhost","xiao-yufei","D5I1F0D9wJAEFNmKuK4au6gc");
+        //$con = mysql_connect("localhost","xiao-yufei","D5I1F0D9wJAEFNmKuK4au6gc");
+        $con = new mysqli("localhost", "xiao-yufei", "D5I1F0D9wJAEFNmKuK4au6gc");
         if (!$con)
         {
             header("Location:test.php?err=3");
         }
-        mysql_select_db("2201613130107", $con);
+        //mysql_select_db("2201613130107", $con);
         $select = "SELECT username,password FROM user WHERE userName = '$username' AND pwd = '$password'";
-        $check = mysqli_query($select);
+        $check = mysqli_query($select,$con);
         
         if ($username == $row['username'] && $password == $row['password']) 
         {
