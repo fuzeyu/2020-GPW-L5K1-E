@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 			if ($_SESSION['login_level'] == 3) {
 				header('location: manager.php');
 			} else if ($_SESSION['login_level'] == 1) {
-				header('location: employee/manager.php');
+				header('location: user.php');
 			
 	 
             
