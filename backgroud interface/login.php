@@ -1,88 +1,3 @@
-<?php
-
-// 1. Open database connection
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "Group3666";
-$dbname = "funeral_service";
-
-$connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
-
-// Test if connection is ok
-if (mysqli_connect_errno()) {
-    die("Database connection failed: " .
-        mysqli_connect_error() .
-        " (" . mysqli_connect_errno() . ")" 
-    );
-}
-
-
-
-if (isset($_POST['submit'])) {
-    if (empty($_POST['username']) || empty($_POST['password'])) {
-        $error = "username or password is empty";
-    } else { 
-        // Save username & password in a variable
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        // 2. Prepare query
-        $query  = "SELECT username, password, level "; 
-        $query .= "FROM user ";
-        $query .= "WHERE username = '$username' AND password = '$password' ";
-
-        // 2. Execute query
-        $result = mysqli_query($connection, $query);
-
-        if (!$result) {
-            die("query is wrong");
-        }
-
-        // Save data to $row
-        $row = mysqli_fetch_array($result);
-        
-        // Check how many answers did we get
-        $numrows=mysqli_num_rows($result);
-        if ($numrows == 1) {
-            // Start to use sessions
-            session_start();
-            
-            // Create session variables
-            $_SESSION['login_user'] = $username;
-			$_SESSION['login_level'] = $row['level'];
-            
-			if ($_SESSION['login_level'] == 3) {
-				header('location: manager.php');
-			} else if ($_SESSION['login_level'] == 1) {
-				header('location: employee/manager.php');
-			
-	 
-            
-        } else {
-            echo "Login failed";
-        }
-       } 
-        // 4. free results
-        mysqli_free_result($result);
-}
-}
-// 5. close db connection
-mysqli_close($connection);
-
-?>
-
-<?php
-
-//require('includes/header.php');
-
-if (isset($error)) {
-    echo "<span>" . $error ."</span>";
-}
-
-?>
-
-
-           
 <!DOCTYPE html>
 <html lang="en">
 
@@ -94,7 +9,7 @@ if (isset($error)) {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Funeral Service-Product Information</title>
+  <title>SB Admin 2 - Login</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -122,16 +37,14 @@ if (isset($error)) {
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
-                    <h2 class="h4 text-gray-900 mb-4">Welcome Back, Managers!</h2>
+                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                   </div>
-                    
-                    
-                  <form class="user" action="login.php" method="POST">
+                  <form class="user" action="logintext.php" method="post">
                     <div class="form-group">
-                      <input type="text" name="username" class="form-control form-control-user"  placeholder="Enter Username...">
+                      <input type="text" name="uname" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
-                      <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="text" name="password" class="form-control form-control-user" id="exampleInputPassword">
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
@@ -139,18 +52,27 @@ if (isset($error)) {
                         <label class="custom-control-label" for="customCheck">Remember Me</label>
                       </div>
                     </div>
-                    <input type="submit" name="submit" value="Login" class="btn btn-primary btn-user btn-block">
-                        
-                    
+                    <input type="submit" value="submit" class="btn btn-primary btn-user btn-block">
                     <hr>
-                  
+                    <input type="button" onclick="window.location.href='regist.php'" value="regist" class="btn btn-google btn-user btn-block">
+                      
+                      <td colspan="2" align="center" style="color:red;font-size:10px;"> 
+
+        <?php
+            $err = isset($_GET["err"]) ? $_GET["err"] : "";
+            switch ($err) {
+            case 1:echo "用户名或密码错误！";break;
+            case 2:echo "用户名或密码不能为空！";break;
+            case 3:echo "连接服务器失败!";break;
+        } ?>
+    </td> 
                   </form>
-                  
+                  <hr>
                   <div class="text-center">
-                    <h6><a class="small" href="forgot-password.html">Forgot Password?</a></h6>
+                    <a class="small" href="forgot-password.html">Forgot Password?</a>
                   </div>
                   <div class="text-center">
-                      <h6><a class="small" href="register.html">Create an Account!</a></h6>
+                    <a class="small" href="register.html">Create an Account!</a>
                   </div>
                 </div>
               </div>
@@ -177,4 +99,3 @@ if (isset($error)) {
 </body>
 
 </html>
-
