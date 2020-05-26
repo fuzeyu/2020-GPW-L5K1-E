@@ -75,16 +75,16 @@
             
             <div class="tab-content p-4 px-5" id="v-pills-tabContent">
 
-              <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
+               <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
               	<form action="#" class="search-destination">
               		<div class="row">
               			<div class="col-md align-items-end">
               				<div class="form-group">
               					<label for="#">From</label>
 	              				<div class="form-field">
-                                    <form id="form1" name="form1" method="post" action="addroute.php">
+	              					<form id="form1" name="form1" method="post" action="addroute.php">
                                       <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
+                                    <select name="" id="" class="form-control">
                                   
                                          <option value="">chengdu</option>
 			                             <option value="">leshan</option>
@@ -94,14 +94,17 @@
 			                      </select>
                                  
                                   </form>
-                                   
+					              </div>
+				              </div>
+              			</div>
               			<div class="col-md align-items-end">
               				<div class="form-group">
               					<label for="#">Where</label>
               					<div class="form-field">
 	              					<form id="form2" name="form2" method="post" action="addroute.php">
                                       <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
+                                       <select name="" id="" class="form-control">
+                                  
                                          <option value="">chengdu</option>
 			                             <option value="">leshan</option>
 			                             <option value="">pengsahn</option>
@@ -113,51 +116,56 @@
 					              </div>
 				              </div>
               			</div>
-                                    <div class="col-md align-items-end">
+              			<div class="col-md align-items-end">
+              				<div class="form-group">
+              					<label for="#">Date</label>
+              					<div class="form-field">
+	              					<div class="icon"><span class="icon-map-marker"></span></div>
+					                <input type="text" class="form-control checkin_date" placeholder="Date">
+					              </div>
+				              </div>
+              			</div>
+              			<div class="col-md align-items-end">
               				<div class="form-group">
               					<label for="#">Set type</label>
               					<div class="form-field">
 	              					<form id="form2" name="form2" method="post" action="addroute.php">
                                       <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
+                                       <select name="" id="" class="form-control">
+                                  
                                          <option value="">First-class seat</option>
 			                             <option value="">Second-class seat</option>
 			                      </select>
-                                 
+					              </div>
+				              </div>
+              			</div>
               			<div class="col-md align-items-end">
               				<div class="form-group">
               					<label for="#">Travelers</label>
               					<div class="form-field">
-	              					<form id="form2" name="form2" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
-                                         <option value="">1</option>
-			                             <option value="">2</option>
-			                             <option value="">3</option>
-			                             <option value="">4</option>
-			                   
+	              					<div class="select-wrap">
+			                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+			                      <select name="" id="" class="form-control">
+			                      	<option value="">1</option>
+			                        <option value="">2</option>
+			                        <option value="">3</option>
+			                        <option value="">4</option>
+			                        <option value="">5</option>
 			                      </select>
-                            
-					              
-				             
-              		
-              			<div class="col-md align-items-end">
+			                    </div>
+					              </div>
+				              </div>
+              			</div>
+              			<div class="col-md align-self-end">
               				<div class="form-group">
-              					<label for="#">Food</label>
               					<div class="form-field">
-	              					<form id="form2" name="form2" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
-                                         <option value="">combo1</option>
-			                             <option value="">combo2</option>
-			                             <option value="">combo3</option>
-			                             <option value="">combo4</option>
-			                   
-			                      </select>
-                                 <input type="submit" name="submit">
-					              
-				              
-              			
+					                <input type="submit" value="Search" class="form-control btn btn-primary">
+					              </div>
+				              </div>
+              			</div>
+              		</div>
+              	
+              		
          <section class="ftco-section">
     	<div class="container">
     		<div class="row justify-content-center mb-5 pb-3">
