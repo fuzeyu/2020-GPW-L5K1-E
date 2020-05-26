@@ -550,7 +550,6 @@
              var seat_type = document.getElementById("dataTable").rows[i].cells[3].innerText;
              var bus_type = document.getElementById("dataTable").rows[i].cells[4].innerText;
              var customer = document.getElementById("dataTable").rows[i].cells[5].innerText;
-             //向模态框中传值
              $('#t_id').val(t_id);
              $('#start').val(start);
              $('#destination').val(destination);
