@@ -67,11 +67,11 @@
     		<div class="row no-gutters">
           <div class="col-md-12 nav-link-wrap">
             <div class="nav nav-pills justify-content-center text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-              <a class="nav-link active" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Route</a>
+              <a class="nav-link active" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Ticket</a>
 
             </div>
           </div>
-          <div class="col-md-12 tab-wrap">
+                 <div class="col-md-12 tab-wrap">
             
             <div class="tab-content p-4 px-5" id="v-pills-tabContent">
 
@@ -80,83 +80,52 @@
               		<div class="row">
               			<div class="col-md align-items-end">
               				<div class="form-group">
-              					<label for="#">From</label>
-	              				<div class="form-field">
-                                    <form id="form1" name="form1" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
-                                  
-                                         <option value="">chengdu</option>
-			                             <option value="">leshan</option>
-			                             <option value="">pengsahn</option>
-			                             <option value="">meishan</option>
-			                        <option value="">jiangyou</option>
-			                      </select>
-                                 
-                                  </form>
-                                   
-              			<div class="col-md align-items-end">
-              				<div class="form-group">
-              					<label for="#">Where</label>
-              					<div class="form-field">
-	              					<form id="form2" name="form2" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
-                                         <option value="">chengdu</option>
-			                             <option value="">leshan</option>
-			                             <option value="">pengsahn</option>
-			                             <option value="">meishan</option>
-			                        <option value="">jiangyou</option>
-			                      </select>
-                               
-                                  </form>
-					              </div>
-				              </div>
-              			</div>
-                                    <div class="col-md align-items-end">
-              				<div class="form-group">
-              					<label for="#">Set type</label>
-              					<div class="form-field">
-	              					<form id="form2" name="form2" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
-                                         <option value="">First-class seat</option>
-			                             <option value="">Second-class seat</option>
-			                      </select>
-                                 
-              			<div class="col-md align-items-end">
-              				<div class="form-group">
-              					<label for="#">Travelers</label>
-              					<div class="form-field">
-	              					<form id="form2" name="form2" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
-                                         <option value="">1</option>
-			                             <option value="">2</option>
-			                             <option value="">3</option>
-			                             <option value="">4</option>
-			                   
-			                      </select>
-                            
-					              
-				             
-              		
-              			<div class="col-md align-items-end">
-              				<div class="form-group">
-              					<label for="#">Food</label>
-              					<div class="form-field">
-	              					<form id="form2" name="form2" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                     <select name="mysel" id="mysel">
-                                         <option value="">combo1</option>
-			                             <option value="">combo2</option>
-			                             <option value="">combo3</option>
-			                             <option value="">combo4</option>
-			                   
-			                      </select>
-                                 <input type="submit" name="submit">
-					              
-				              
+              					<label for="#"></label>
+                <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>t_id</th>
+                      <th>start</th>
+                      <th>destination</th>
+                      <th>seat_type</th>
+                      <th>bus_type</th>
+                      <th>customer</th>
+                      <th><button class="fa fa-plus-circle" data-toggle="modal" data-target="#addticket"></button></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                     $con = new mysqli("localhost", "xiao-yufei", "D5I1F0D9wJAEFNmKuK4au6gc","2201613130107");
+                     $select = "SELECT * FROM ticket;";
+                     $arr = mysqli_query($con, $select);
+                    ?>
+                    <?php
+                     if (mysqli_num_rows($arr) > 0) 
+                     {
+                        while($row = mysqli_fetch_assoc($arr)) 
+                        {?>
+                      <tr>
+                        <td><?php echo $row["t_id"];?></td>
+                        <td><?php echo $row["start"];?></td>
+                        <td><?php echo $row["destination"];?></td>
+                        <td><?php echo $row["seat_type"];?></td>
+                        <td><?php echo $row["bus_type"];?></td>
+                        <td><?php echo $row["customer"];?></td>
+                        <td>
+                            <button class="fa fa-pencil" data-toggle="modal" data-target="#correcttikect" onclick = "getInfo(this)"></button>
+                            <button class="fa fa-trash-o" data-toggle="modal" data-target="#deletetikect" onclick = "getInfo(this)"></button>
+                        </td>
+                    <?php }}mysqli_close($con) ?>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
               			
          <section class="ftco-section">
     	<div class="container">
@@ -462,6 +431,108 @@
 
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+            
+            
+            
+            <form action="update.php" method="post">
+            <div class="modal fade" id="correcttikect" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="smallmodalLabel">Small Modal</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <b>t_id</b><input class = "form-control" id="t_id" name="t_id" required readonly value="">
+                            <b>start</b><input class = "form-control" id="start" name="start" required value="">
+                            <b>destination</b><input class = "form-control" id="destination" name="destination" required value="">
+                            <b>seat_type</b><input class = "form-control" id="seat_type" name="seat_type" required value="">
+                            <b>bus_type</b><input class = "form-control" id="bus_type" name="bus_type" required value="">
+                            <b>customer</b><input class = "form-control" id="customer" name="customer" required value="">
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  </form>
+    
+  <form action="add.php" method="post">
+            <div class="modal fade" id="addticket" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="smallmodalLabel">Small Modal</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <b>start</b><input class = "form-control" id="start" name="start" required value="">
+                            <b>destination</b><input class = "form-control" id="destination" name="destination" required value="">
+                            <b>seat_type</b><input class = "form-control" id="seat_type" name="seat_type" required value="">
+                            <b>bus_type</b><input class = "form-control" id="bus_type" name="bus_type" required value="">
+                            <b>customer</b><input class = "form-control" id="customer" name="customer" value="">
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  </form>
+    
+  <form action="delete.php" method="post">
+       <div class="modal fade" id="deletetikect" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="smallmodalLabel">Small Modal</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input class = "form-control" id="delete_t_id" name="t_id" required value="" style="display:none">
+                        </div>
+                        <div style="padding-left:35%">really delete?</div><br>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="submit" class="btn btn-primary">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+  </form>
+    
+  <script>
+      function getInfo(obj)
+      {
+             var i = obj.parentNode.parentNode.rowIndex;
+             var t_id = document.getElementById("dataTable").rows[i].cells[0].innerText;
+             var start = document.getElementById("dataTable").rows[i].cells[1].innerText;
+             var destination = document.getElementById("dataTable").rows[i].cells[2].innerText;
+             var seat_type = document.getElementById("dataTable").rows[i].cells[3].innerText;
+             var bus_type = document.getElementById("dataTable").rows[i].cells[4].innerText;
+             var customer = document.getElementById("dataTable").rows[i].cells[5].innerText;
+             $('#t_id').val(t_id);
+             $('#start').val(start);
+             $('#destination').val(destination);
+             $('#seat_type').val(seat_type);
+             $('#bus_type').val(bus_type);
+             $('#customer').val(customer);
+             $('#delete_t_id').val(t_id);
+             //console.log(name,age);
+      }
+      
+  </script>
     
   </body>
 </html>
