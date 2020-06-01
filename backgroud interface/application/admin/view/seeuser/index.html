@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>查看用户信息</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		body{
+			width: 100vw;
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			font-size: 14px;
+			position: relative;
+			background: url('../../static/images/adminBackground.jpg') 100% 100%;
+		}
+		@media (min-width: 1200px){
+				.table1{
+					width: 1200px;
+					height: auto;
+					margin: 100px auto;
+					background: rgba(112,128,144,0.5);
+					text-align: center;
+					color: #fff;
+					font-size: 20px;
+				}
+				.table1 tr{
+					
+					border: 1px solid #000;
+				}
+				.table1 td{
+					border: 1px solid #000;
+				}
+				.go{
+					color: #fff;
+				}
+		}
+		
+	</style>
+</head>
+<body>
+	<table class="table1">
+		<tr>
+			<td colspan="8" style="color: #fff;">*注意注销用户将不可恢复，请谨慎操作</td>
+			<td colspan="2"><a href="../Admin/index" style="color: #fff;">返回后台</a></td>
+		</tr>
+		<tr>
+			<td>编号</td>
+			<td>用户名</td>
+			<td>真实姓名</td>
+			<td>性别</td>
+			<td>年龄</td>
+			<td>电话</td>
+			<td>身份证号码</td>
+			<td>密码</td>
+			<td>注册时间</td>
+			<td>注销用户</td>
+		</tr>
+		
+		{foreach $userList as $vo}
+
+			<tr>
+				<td>{$vo.id}</td>
+				<td>{$vo.userName}</td>
+				<td>{$vo.truthName}</td>
+				<td>{$vo.gender}</td>
+				<td>{$vo.age}</td>
+				<td>{$vo.phone}</td>
+				<td>{$vo.idcard}</td>
+				<td>{$vo.pwd}</td>
+				<td>{$vo.createTime}</td>
+				<td><a  href="deluser?id={$vo.id}"  style="color: #fff;">注销用户</a></td>
+			</tr>
+		{/foreach}
+			<tr>
+				<td colspan="3">
+					总页数: {$tp}
+				</td>
+				<td colspan="4" class="go">
+					<input type="text" id="input">
+					<input type="button" value="跳转" id="goTo">
+				</td>
+				<td colspan="3">
+					当前页:第{$cp}页
+				</td>
+			</tr>
+	</table>
+	<script>
+		$(function(){
+			//跳转分页
+			let cp = {$cp};
+			if(cp == 1){
+				$('.go').empty()
+				$('.go').html('数据记录太少，不支持跳转');
+			}else{
+				$('#goTo').click(function(){
+					let ingoto = $('#in').val();
+					if(ingoto != ""){
+						$.ajax({
+							url: '',
+							type: 'post',
+							data: {
+								'cp':ingoto
+							}
+						});
+					}
+				});
+			}
+			//注销用户
+				// $('#del').click(function(){
+				// 	let index = $('#del').prop('index');
+				// 	console.log(index);
+				// });
+				
+				// console.log(index);
+
+				
+				// if(index != ""){
+				// 	let res = confirm('确定要注销当前用户吗?');
+				// 	if(res){
+				// 		$.ajax({
+				// 			url: 'deluser',
+				// 			type: 'post',
+				// 			data: {
+				// 				'id': index
+				// 			},
+				// 			success: function(res){
+				// 				if(res == '注销成功'){
+				// 					alert(res);
+				// 					location.href="";
+				// 				}else{
+				// 					alert(res);
+				// 				}
+				// 			}
+				// 		});
+				// 	}
+				// }
+				
+			
+			//返回结果
+			
+		});
+		function GetQueryString(name)
+		{
+	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	     var r = window.location.search.substr(1).match(reg);
+	     if(r!=null)return  unescape(r[2]); return null;
+		}
+	</script>
+</body>
+</html>

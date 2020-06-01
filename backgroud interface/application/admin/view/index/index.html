@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+	<title>管理员登录</title>
+	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		body{
+			width: 100vw;
+			height: 100vh;
+			background: url('static/images/bg4.jpg') 100% 100%;
+			font-size: 16px;
+		}
+		@media (min-width: 768px){}
+		@media (min-width: 992px){}
+		@media (min-width: 1200px){
+			.div_1{
+				display: none;
+				position: absolute;;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				width: 60px;
+				height: 60px;
+			}
+			.div_login{
+				display: none;
+				position: absolute;;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				width: 500px;
+				height: 300px;
+				border-radius: 5px;
+				background: rgba(128,138,135,0.5);
+			}
+			.div_login h3{
+				text-align: center;
+			}
+			.div_login .box{
+				width: 460px;
+				height: 60px;
+				margin: 5px auto;
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+			}
+			.div_login .box .icon{
+				width: 30px;
+				height: 30px;
+				margin-right: 10px;
+			}
+			.div_login .box2 input{
+				width: 300px;
+				height: 30px;
+				border: 0;
+				border-bottom: 2px solid #fff;
+				background: none;
+				outline: 0;
+				color: #fff;
+			}
+			
+			.div_login .box3 input{
+				width: 300px;
+				height: 30px;
+				border: 0;
+				border-bottom: 2px solid #fff;
+				background: none;
+				outline: 0;
+				color: #fff;
+			}
+			.div_login .box4 input{
+				width: 340px;
+				height: 40px;
+				
+			}
+			.box1{
+				display: none;
+				position: absolute;
+				top: 5%;
+				left: 50%;
+				transform: translate(-50%,0);
+				width: 120px;
+				height: 60px;
+				border-radius: 15px;
+				background: #fff;
+				z-index: 10;
+				text-align: center;
+				line-height: 60px;
+			}
+			::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+		    	color: #fff;
+			}
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			   color:  #fff;
+			   opacity:  1;
+			}
+			::-moz-placeholder { /* Mozilla Firefox 19+ */
+			   color:   #fff;
+			   opacity:  1;
+			}
+			:-ms-input-placeholder { /* Internet Explorer 10-11 */
+			   color:    #fff;
+			}	
+		
+		}
+	</style>
+</head>
+<body>
+	<img src="static/images/加载.gif" class="div_1" id="div1" />
+	<div class="div_login" id="divLogin">
+			<h3 style="color: #fff;">管理员登录...</h3>
+		
+			<div class="box box2">
+				<img src="static/images/登陆.png" class="icon" />
+				<input type="text" placeholder="请输入用户名..." id="admin">
+			</div>
+			<div class="box box3">
+				<img src="static/images/密码.png" class="icon" />
+				<input type="password" placeholder="请输入密码..." id="pwd">
+			</div>
+			<div class="box box4">
+				<input type="button" value="登录" id="login">
+			</div>
+	</div>
+
+	<!--状态结果提示框-->
+	<div class="box1" id="box1">
+		
+	</div>
+	<script>
+	$(function(){
+		$('#div1').fadeIn(2000,function(){
+			$('#div1').fadeOut(2000,function(){
+				$('#divLogin').css({
+					'display':'block'
+				});
+			});
+		});
+		
+		$('#login').click(function(){
+			let admin = $('#admin').val();
+			let pwd = $('#pwd').val();
+			if(admin == ''){
+				alert('用户名不能为空');
+				$('#admin').focus();
+			}
+			if(pwd == ''){
+				alert('密码不能为空');
+				$('#pwd').focus();
+			}
+			if(admin != '' && pwd != ''){
+				 $.ajax({
+				     type:"post",
+				     url:"https://2201613130107.instantcloud.cn/xyf/public/admin.php/Index/checkLogin",  //数据传输的控制器方法
+				     data:{
+				     	"admin": admin,
+				     	"pwd": pwd
+				     },//这里data传递过去的是序列化以后的字符串
+				     success:function(data){
+				      if(data == '登录成功'){
+							      $('#box1').fadeIn(1000,function(){
+							      	$('#box1').html(data);
+							      	setTimeout(function(){
+							      		$('#box1').fadeOut(1000,function(){
+							      			location.href = 'https://2201613130107.instantcloud.cn/xyf/public/admin.php/Admin/index'
+							      		});
+							      	},2000)
+							      	
+							      })
+							}
+							if(data == '登录失败'){
+					 			$('#box1').fadeIn(1000,function(){
+							      	$('#box1').html(data);
+							      	setTimeout(function(){
+							      		$('#box1').fadeOut(1000);
+							      	},2000)
+							      	
+							      })
+							     }
+				      
+				     }
+				    });
+
+			}
+		});
+		
+		//键盘回车登录
+		$('body').keydown(function(e){
+			if(e.which == '13'){
+				let admin = $('#admin').val();
+				let pwd = $('#pwd').val();
+				if(admin == ''){
+					alert('用户名不能为空');
+					$('#admin').focus();
+				}
+				if(pwd == ''){
+					alert('密码不能为空');
+					$('#pwd').focus();
+				}
+				if(admin != '' && pwd != ''){
+					 $.ajax({
+					     type:"post",
+					     url:"https://2201613130107.instantcloud.cn/xyf/public/admin.php/Index/checkLogin",  //数据传输的控制器方法
+					     data:{
+					     	"admin": admin,
+					     	"pwd": pwd
+					     },//这里data传递过去的是序列化以后的字符串
+					     success:function(data){
+					     	if(data == '登录成功'){
+							      $('#box1').fadeIn(1000,function(){
+							      	$('#box1').html(data);
+							      	setTimeout(function(){
+							      		$('#box1').fadeOut(1000,function(){
+							      			location.href = 'https://2201613130107.instantcloud.cn/xyf/public/admin.php/Admin/index?admin='+admin
+							      		});
+							      	},2000)
+							      	
+							      })
+							}
+							if(data == '登录失败'){
+					 			$('#box1').fadeIn(1000,function(){
+							      	$('#box1').html(data);
+							      	setTimeout(function(){
+							      		$('#box1').fadeOut(1000);
+							      	},2000)
+							      	
+							      })
+							     }
+
+					 	}
+					 	
+					 		});
+					    }
+
+				}
+			});
+	});
+	</script>
+</body>
+</html>

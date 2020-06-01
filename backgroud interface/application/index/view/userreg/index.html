@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册用户</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		body{
+			width: 100vw;
+			height: 100vh;
+			margin: 0;
+			padding: 0;
+			font-size: 14px;
+			background: url('../../../static/images/adminBackground.jpg') 100% 100%;
+		}
+
+		@media (min-width: 1200px){
+			.register{
+				width: 500px;
+				height: 400px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				background: rgba(112,128,144,0.5);
+				transform: translate(-50%,-50%);
+				display: flex;
+				flex-direction: column;
+				justify-content: space-around;
+				align-items: center;
+				border-radius: 5px;
+			}
+			.register div{
+				width: 480px;
+				height: 30px;
+			}
+			.register .ch_code{
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			}
+			.register .ch_code .dp_code{
+				width: 100px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				background: #fff;
+			}
+			.register .ch_code #checkCode{
+				width: 200px;
+				height: 30px;
+			}
+			.register div input[type ='text']{
+				width: 480px;
+				height: 30px;
+			}
+			.register div input[type ='password']{
+				width: 480px;
+				height: 30px;
+			}
+			.register div input[type ='button']{
+				width: 120px;
+				height: 30px;
+				background: #fff;
+				line-height: 30px;
+				padding: 0;
+				border: none;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="register">
+		<div style="font-size: 18px; color: #fff;">注册用户</div>
+		<div>
+			<input type="text" placeholder="用户名" id="userName">
+		</div>
+		<div>
+			<input type="text" placeholder="真实姓名" id="truthName">
+		</div>
+		<div>
+			<input type="text" placeholder="性别" id="gender">
+		</div>
+		<div>
+			<input type="text" placeholder="年龄" id="age">
+		</div>
+		<div>
+			<input type="text" placeholder="身份证号码" id="idcard">
+		</div>
+		<div>
+			<input type="text" placeholder="电话" id="phone">
+		</div>
+		<div>
+			<input type="password" placeholder="密码" id="pwd">
+		</div>
+		<div>
+			<input type="password" placeholder="确认密码" id="pwd2">
+		</div>
+		<div class="ch_code">
+			<input type="text" placeholder="验证码" id="checkCode">
+			<div class="dp_code"></div>
+		</div>
+		<div style="display: flex;flex-direction: row;justify-content: space-between;">
+			<input type="button" value="注册" id="register">
+			<input type="button" value="重置" id="reset">
+			<input type="button" value="返回" id="back">
+		</div>
+	</div>
+	<script>
+		$(function(){
+			//重置
+			$('#reset').click(function(){
+				let userName = $('#userName').val(function(){
+					return '';
+				});
+				let truthName = $('#truthName').val(function(){
+					return '';
+				});
+				let gender = $('#gender').val(function(){
+					return '';
+				});
+				let age = $('#age').val(function(){
+					return '';
+				});
+				let idcard = $('#idcard').val(function(){
+					return '';
+				});
+				let phone = $('#phone').val(function(){
+					return '';
+				});
+				let pwd = $('#pwd').val(function(){
+					return '';
+				});
+				let pwd2 = $('#pwd2 ').val(function(){
+					return '';
+				});
+				let checkCode = $('#checkCode ').val(function(){
+					return '';
+				});
+			});
+			let code = randomCheckCode();
+			$('.dp_code').html(code);
+
+			//点击验证码刷新
+			$('.dp_code').click(function(){
+
+				if(code != null){
+					code = randomCheckCode();
+					$('.dp_code').html(code);
+				}
+				
+			});
+			//注册
+			$('#register').click(function(){
+				let userName = $('#userName').val();
+				let truthName = $('#truthName').val();
+				let gender = $('#gender').val();
+				let age = $('#age').val();
+				let idcard = $('#idcard').val();
+				let phone = $('#phone').val();
+				let pwd = $('#pwd').val();
+				let pwd2 = $('#pwd2 ').val();
+				let checkCode = $('#checkCode ').val();
+
+				if(userName == '' || truthName == '' || gender == '' || age == '' || idcard == ''|| phone == ''|| pwd == '' || pwd2 == ''){
+					alert('有未填写信息，请注意检查！');
+				}
+				if(pwd != pwd2){
+					alert('两次密码输入不一致！');
+				}
+				//生成随机验证码
+				if(checkCode != code){
+					alert('验证码输入错误');
+				}else{
+					$.ajax({
+						url: 'addUser',
+						type: 'post',
+						data: {
+							'userName': userName,
+							'truthName': truthName,
+							'gender': gender,
+							'age': age,
+							'idcard': idcard,
+							'phone': phone,
+							'pwd': pwd,
+						},
+						success: function(res){
+							alert(res+',快去登录吧！');
+							location.href = '../Userlog/index'
+						}
+					});
+				}				
+			});
+
+			//返回
+			$('#back').click(function(){
+				location.href = 'https://2201613130107.instantcloud.cn/xyf/public/index.php';
+			});
+			
+		});
+
+		function randomCheckCode(){
+			let str = 'q w e r t y u i o p a s d f g h j k l z x c v b n m Q W E R T Y U I O P A S D F G H J K L Z X C V B N M 1 2 3 4 5 6 7 8 9 0';
+			let strArr = str.split(' ');
+			let newStr  = '';
+			// console.log(strArr);
+			// console.log(Math.floor(Math.random()*(strArr.length+1)));
+			for(let i = 0;i<4;i++){
+				let c = strArr[Math.floor(Math.random()*(strArr.length))];
+				newStr = newStr + c;
+			}
+
+			return newStr;
+
+		}
+	</script>
+</body>
+</html>

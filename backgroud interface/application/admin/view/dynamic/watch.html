@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>查看网站动态</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		body{
+			margin: 0;
+			padding: 0;
+			width: 100vw;
+			height: 100vh;
+			font-size: 14px;
+			background: url('../../static/images/adminBackground.jpg') 100% 100%;
+		}
+		@media (min-width: 1200px){
+			.div1{
+				width: 1000px;
+				height: 1200px;
+				background: rgba(112,128,144,0.5);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				margin: 60px auto;
+			}
+			.div1 .div2{
+				width: 900px;
+				height: 200px;
+				background: #fff;
+				display: flex;
+				flex-direction: row;
+				margin-top: 20px;
+				position: relative;
+			}
+			.div1 .div2 .img{
+				max-width: 320px;
+				height: 200px;
+			}
+			.div1 .div2 .div3{
+				width: 500px;
+				height: 200px;
+				display: flex;
+				flex-direction: column;
+			}
+			.div1 .div2 .div5{
+				width: 80px;
+				height: 30px;
+				line-height: 30px;
+				background: rgba(112,128,144,0.5);
+				font-size: 20px;
+				text-align: center;
+				position: absolute;
+				top: 50%;
+				right: 0;
+				transform: translate(0,-50%);
+			}
+			.div6{
+				width: 300px;
+				height: 200px;
+				background: rgba(112,128,144,0.5);
+				position: fixed;
+				top: 60px;
+				left: 30px;
+				z-index: 2;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			.div6 .div{
+				width: 280px;
+				height: 40px;
+				background: rgba(112,128,144,0.5);
+				box-shadow: 0 4px 8px #000;
+				line-height: 40px;
+				font-size: 20px;
+				letter-spacing: 2px;
+				margin: 5px;
+				text-align: center;
+				color: #fff;
+			}
+			.div1 .div9{
+				width: 900px;
+				height: 30px;
+				line-height: 30px;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="div1">
+		{foreach  $list as $vo}
+			<div class="div2">
+				<img src="../../{$vo.imgPath}" alt="封面" class="img" />
+				<div class="div3">
+					<span>作者：{$vo.author}</span>
+					<div class="div4">
+						简介：{$vo.introduce}
+					</div>
+				</div>
+				<div class="div5">
+					<a href="?id={$vo.id}" style="color: #fff;">移除</a>
+				</div>
+			</div>
+		{/foreach}
+		<div class="div9">
+			<a href="#" id="pre">上一页</a>
+			<a href="#" id="next">下一页</a>
+		</div>
+
+	</div>
+	<div class="div6">
+		<div class="div div7">
+			总页数:{$total}页
+		</div>
+		<div class="div div8">
+			当前页:第{$currentPage}页
+		</div>
+		<div class="div div10" id="div10">
+			返回管理页面
+		</div>
+	</div>
+	
+	<script>
+		$(function(){
+			let cp = {$currentPage};
+			let tl = {$total}
+
+			if(cp == 1 && tl == 1){
+					$('#pre').css({
+						'color':'gray'
+					});
+					$('#next').css({
+						'color':'gray'
+					});
+				}
+			if(cp == tl && cp !=1 && tl!= 1){
+				$('#pre').attr({
+					'href':'?page='+(cp - 1)
+				});
+				$('#next').css({
+						'color':'gray'
+					});
+			}
+			if(cp != tl && tl!= 1){
+				$('#pre').css({
+					'color':'gray'
+				});
+				$('#next').attr({
+					'href':'?page='+(cp + 1)
+					});
+			}
+
+			$('#div10').click(function(){
+				location.href='https://2201613130107.instantcloud.cn/xyf/public/admin.php/Admin/index';
+			});
+			
+		});
+	</script>
+
+</body>
+</html>
