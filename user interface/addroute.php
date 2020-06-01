@@ -1,4 +1,28 @@
+<?php
+
+require('db.php');
+
+if ($_POST['submit']) {
+    $name = $_POST['name'];
+    $idcard = $_POST['idcard'];
+    $start = $_POST['start'];
+    $end = $_POST['end'];
+    $type = $_POST['type'];
+    $food = $_POST['food'];
+    
+    // 2. Do a query
+    $query  = "INSERT INTO route (name,idcard,start, end, type,food ) "; 
+    $query .= "VALUES ('$name', '$idcard', '$start', '$end', '$type',' $food' ) ";
+    header("Location:addroute.php");
+
+    echo $query;
+
+    $result = mysqli_query($connection, $query);
+}
+
+?>
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <title>Adventure - Free Bootstrap 4 Template by Colorlib</title>
@@ -39,11 +63,8 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-	          <li class="nav-item"><a href="places.html" class="nav-link">Places</a></li>
-	          <li class="nav-item"><a href="hotel.html" class="nav-link">Hotels</a></li>
-	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+	           <li class="nav-item"><a href="login.php" class="nav-link">Sign In</a></li>
+              <li class="nav-item"><a href="register.php" class="nav-link">Sign Up</a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -71,101 +92,53 @@
 
             </div>
           </div>
-          <div class="col-md-12 tab-wrap">
-            
-            <div class="tab-content p-4 px-5" id="v-pills-tabContent">
+         
 
-               <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-              	<form action="#" class="search-destination">
-              		<div class="row">
-              			<div class="col-md align-items-end">
-              				<div class="form-group">
-              					<label for="#">From</label>
-	              				<div class="form-field">
-	              					<form id="form1" name="form1" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                    <select name="" id="" class="form-control">
+<div>
+<form action="addroute.php" method="post">
+    <div>
+         Customer Name: <input type="text" name="name"> <br/>
+         ID Card: <input type="text" name="idcard"> <br/>
+    <select name="start" id="type" class="form-control">
+    <option value="null">Please select place</option>
                                   
-                                         <option value="">chengdu</option>
-			                             <option value="">leshan</option>
-			                             <option value="">pengsahn</option>
-			                             <option value="">meishan</option>
-			                        <option value="">jiangyou</option>
-			                      </select>
-                                 
-                                  </form>
-					              </div>
-				              </div>
-              			</div>
-              			<div class="col-md align-items-end">
-              				<div class="form-group">
-              					<label for="#">Where</label>
-              					<div class="form-field">
-	              					<form id="form2" name="form2" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                       <select name="" id="" class="form-control">
+    <option value="chengdu">ChengDu</option>
+    <option value="leshan">LeShan</option>
+    <option value="pengshan">PengShan</option>
+    <option value="meishan">MeiShan</option>
+    <option value="jiangyou">JiangYou</option>
+    </select>
+
+    <select name="end" id="type" class="form-control">
                                   
-                                         <option value="">chengdu</option>
-			                             <option value="">leshan</option>
-			                             <option value="">pengsahn</option>
-			                             <option value="">meishan</option>
-			                        <option value="">jiangyou</option>
-			                      </select>
+    <option value="null">Please select place</option>
+                                  
+    <option value="chengdu">ChengDu</option>
+    <option value="leshan">LeShan</option>
+    <option value="pengshan">PengShan</option>
+    <option value="meishan">MeiShan</option>
+    <option value="jiangyou">JiangYou</option>
+    </select>
+			                      
                                
-                                  </form>
-					              </div>
-				              </div>
-              			</div>
-              			<div class="col-md align-items-end">
-              				<div class="form-group">
-              					<label for="#">Date</label>
-              					<div class="form-field">
-	              					<div class="icon"><span class="icon-map-marker"></span></div>
-					                <input type="text" class="form-control checkin_date" placeholder="Date">
-					              </div>
-				              </div>
-              			</div>
-              			<div class="col-md align-items-end">
-              				<div class="form-group">
-              					<label for="#">Set type</label>
-              					<div class="form-field">
-	              					<form id="form2" name="form2" method="post" action="addroute.php">
-                                      <label for="mysel"></label>
-                                       <select name="" id="" class="form-control">
-                                  
-                                         <option value="">First-class seat</option>
-			                             <option value="">Second-class seat</option>
+    
+    <select name="type" id="type" class="form-control">
+    <option value="null">Please select set type</option>
+    <option value="First-class seat">First-class seat</option>
+    <option value="Second-class seat">Second-class seat</option>
 			                      </select>
-					              </div>
-				              </div>
-              			</div>
-              			<div class="col-md align-items-end">
-              				<div class="form-group">
-              					<label for="#">Travelers</label>
-              					<div class="form-field">
-	              					<div class="select-wrap">
-			                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-			                      <select name="" id="" class="form-control">
-			                      	<option value="">1</option>
-			                        <option value="">2</option>
-			                        <option value="">3</option>
-			                        <option value="">4</option>
-			                        <option value="">5</option>
+        <select name="food" id="type" class="form-control">
+    <option value="null">Please select food</option>
+    <option value="Combo 1">Combo 1</option>
+    <option value="Combo 2">Combo 2</option>
+    <option value="Combo 3">Combo 3</option>
 			                      </select>
-			                    </div>
-					              </div>
-				              </div>
-              			</div>
-              			<div class="col-md align-self-end">
-              				<div class="form-group">
-              					<div class="form-field">
-					                <input type="submit" value="Search" class="form-control btn btn-primary">
-					              </div>
-				              </div>
-              			</div>
-              		</div>
-              	
-              		
+					              
+					              
+   </div>
+    <input type="submit" value="submit" name="submit">
+</form>
+         		
          <section class="ftco-section">
     	<div class="container">
     		<div class="row justify-content-center mb-5 pb-3">
@@ -470,6 +443,3 @@
 
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
-    
-  </body>
-</html>
